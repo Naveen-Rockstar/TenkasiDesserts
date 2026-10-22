@@ -57,6 +57,13 @@ export default function Navbar({ onOpenZomato }) {
   const handleNavLinkClick = (href) => {
     setMobileMenuOpen(false);
     setActiveSection(href);
+    if (href.startsWith('#')) {
+      const target = document.querySelector(href);
+      if (target) {
+        const revealParent = target.closest('.reveal-on-scroll');
+        if (revealParent) revealParent.classList.add('reveal-visible');
+      }
+    }
   };
 
   const whatsappDirectUrl = `https://wa.me/${BUSINESS_CONFIG.phoneRaw}?text=${encodeURIComponent(

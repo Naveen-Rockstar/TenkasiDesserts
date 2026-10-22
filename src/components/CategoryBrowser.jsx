@@ -40,6 +40,8 @@ export default function CategoryBrowser({ onSelectCategory }) {
     }
     const target = document.getElementById('menu');
     if (target) {
+      const revealParent = target.closest('.reveal-on-scroll');
+      if (revealParent) revealParent.classList.add('reveal-visible');
       target.scrollIntoView({ behavior: 'smooth' });
     }
   };

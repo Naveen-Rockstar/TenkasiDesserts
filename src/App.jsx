@@ -22,9 +22,17 @@ export default function App() {
   const openZomato = () => setIsZomatoModalOpen(true);
   const closeZomato = () => setIsZomatoModalOpen(false);
 
-  // Scroll-triggered subtle section reveals
+  // Scroll-triggered subtle section reveals with mobile-responsive thresholds
   useEffect(() => {
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    if (typeof window === 'undefined') return;
+
+    // Fallback if IntersectionObserver is unavailable
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+        el.classList.add('reveal-visible');
+      });
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,13 +44,24 @@ export default function App() {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -30px 0px',
+        // threshold 0 ensures elements of any height (even 9000px tall mobile lists)
+        // reveal as soon as their top enters the trigger window
+        threshold: 0,
+        rootMargin: '0px 0px -20px 0px',
       }
     );
 
     const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach((el) => {
+      if (el.classList.contains('reveal-visible')) return;
+      // If already within or above the viewport on initial load, reveal immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('reveal-visible');
+      } else {
+        observer.observe(el);
+      }
+    });
 
     return () => observer.disconnect();
   }, [activeCategory]);

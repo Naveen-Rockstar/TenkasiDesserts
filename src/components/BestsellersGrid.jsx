@@ -69,7 +69,7 @@ export default function BestsellersGrid({ activeCategory, setActiveCategory, onO
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-14 space-y-2 sm:space-y-3">
           <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#D95B32] font-bold block">
-            Handcrafted In Tenkasi
+            HANDCRAFTED IN TENKASI
           </span>
           <h2 className="font-heading text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#241410] tracking-tight">
             Our Premium Products
